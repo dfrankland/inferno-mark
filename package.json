@@ -1,0 +1,69 @@
+{
+  "name": "inferno-mark",
+  "version": "0.0.0",
+  "description": "Create mark(up/down) components similar to `styled-components`.",
+  "main": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dfrankland/inferno-mark.git"
+  },
+  "keywords": [
+    "inferno",
+    "markup",
+    "markdown",
+    "remark",
+    "rehype",
+    "mdast",
+    "hast"
+  ],
+  "author": "Dylan Frankland <dylan@frankland.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dfrankland/inferno-mark/issues"
+  },
+  "homepage": "https://github.com/dfrankland/inferno-mark#readme",
+  "scripts": {
+    "build": "babel-node ./node_modules/.bin/webpack"
+  },
+  "files": [
+    "dist/index.js"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.21.0",
+    "babel-plugin-external-helpers": "^6.18.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-env": "^1.1.4",
+    "babel-preset-stage-0": "^6.16.0",
+    "json-loader": "^0.5.4",
+    "regenerator-runtime": "^0.10.1",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-webpack-loader": "^1.0.0",
+    "tmp": "^0.0.31",
+    "webpack": "^1.14.0"
+  },
+  "dependencies": {
+    "hast-to-hyperscript": "^2.0.4",
+    "hast-util-sanitize": "^1.1.0",
+    "inferno-hyperscript": "^1.0.4",
+    "mdast-util-to-hast": "^2.2.0",
+    "rehype": "^3.0.0",
+    "remark": "^6.2.0"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "target": {
+            "node": "current"
+          }
+        }
+      ],
+      "stage-0"
+    ],
+    "plugins": [
+      "transform-runtime"
+    ]
+  }
+}
