@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/dfrankland/inferno-mark#readme",
   "scripts": {
+    "prepublish": "npm run build",
     "build": "babel-node ./node_modules/.bin/webpack"
   },
   "files": [
