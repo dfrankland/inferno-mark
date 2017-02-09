@@ -75,7 +75,8 @@ const createMark = getHastFromString => (
 const reducePlugins = (processor, plugins) => {
   if (plugins.length < 1) return processor;
   return plugins.reduce(
-    (newProcessor, nextPlugin) => newProcessor.use(nextPlugin), processor
+    (newProcessor, nextPlugin) => newProcessor.use(nextPlugin),
+    processor,
   );
 };
 
@@ -86,7 +87,7 @@ export const up = createMark(
 
     // Return the innerHTML of the body
     return hast.children[0].children[1];
-  }
+  },
 );
 
 export const down = createMark(
@@ -96,7 +97,7 @@ export const down = createMark(
 
     // Convert from mdast to hast
     return mdastToHast(mdast);
-  }
+  },
 );
 
 export default { up, down };
