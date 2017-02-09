@@ -1,27 +1,8 @@
 import { resolve as resolvePath } from 'path';
-import { fileSync as tmpFileSync } from 'tmp';
-import { buildExternalHelpers } from 'babel-core';
-import { writeFileSync } from 'fs';
-import babel from 'rollup-plugin-babel';
-
-const { dependencies } = require('./package.json');
-
-// Temporary `babelHelpers` dependency
-const { name: tmpFileName } = tmpFileSync();
-writeFileSync(
-  tmpFileName,
-  `
-    ${buildExternalHelpers(null, 'var')}
-    module.exports = babelHelpers;
-  `,
-);
 
 export default {
-  target: 'web',
-  entry: [
-    'regenerator-runtime/runtime',
-    resolvePath(__dirname, './src/index.js'),
-  ],
+  entry: resolvePath(__dirname, './src/index.js'),
+
   output: {
     path: resolvePath(__dirname, './dist'),
     filename: 'index.js',
@@ -29,46 +10,31 @@ export default {
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         include: resolvePath(__dirname, './src'),
-        loader: 'rollup-webpack-loader',
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader',
-      },
-    ],
-  },
-
-  rollupWebpackLoader: {
-    rollup: {
-      external: [...Object.keys(dependencies)],
-
-      paths: id => {
-        if (id.match(/babelHelpers/g) !== null) return tmpFileName;
-        return id;
-      },
-
-      plugins: [
-        babel({
+        loader: 'babel-loader',
+        options: {
           presets: [
             [
               'env',
               {
                 modules: false,
                 targets: {
-                  browsers: 'last 2 versions, > 5%',
+                  browsers: 'last 1 versions',
+                  node: 4,
                 },
               },
             ],
             'stage-0',
           ],
-          plugins: ['external-helpers'],
+          plugins: ['transform-runtime'],
           babelrc: false,
-        }),
-      ],
-    },
+        },
+      },
+    ],
   },
+
+  devtool: 'source-map',
 };

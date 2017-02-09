@@ -30,23 +30,18 @@
     "dist/index.js"
   ],
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.21.0",
-    "babel-plugin-external-helpers": "^6.18.0",
-    "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-env": "^1.1.4",
-    "babel-preset-stage-0": "^6.16.0",
-    "json-loader": "^0.5.4",
-    "regenerator-runtime": "^0.10.1",
-    "rollup-plugin-babel": "^2.7.1",
-    "rollup-webpack-loader": "^1.0.0",
-    "tmp": "^0.0.31",
-    "webpack": "^1.14.0"
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-env": "^1.1.8",
+    "babel-preset-stage-0": "^6.22.0",
+    "webpack": "^2.2.1"
   },
   "dependencies": {
     "hast-to-hyperscript": "^2.0.4",
     "hast-util-sanitize": "^1.1.0",
-    "inferno-hyperscript": "^1.0.4",
+    "inferno-hyperscript": "^1.2.2",
     "mdast-util-to-hast": "^2.2.0",
     "rehype": "^3.0.0",
     "remark": "^6.2.0"
