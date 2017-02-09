@@ -98,3 +98,5 @@ export const down = createMark(
     return mdastToHast(mdast);
   }
 );
+
+export default { up, down };
