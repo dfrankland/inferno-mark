@@ -5,14 +5,14 @@ import hastSanitize from 'hast-util-sanitize';
 import hastToHyperscript from 'hast-to-hyperscript';
 import infernoHyperscript from 'inferno-hyperscript';
 
-const div = (children = []) => ({
+const div = (children) => ({
   type: 'element',
   tagName: 'div',
   properties: {},
   children,
 });
 
-const hyperscriptWrapper = components => (name = 'div', props = {}, children = []) => {
+const hyperscriptWrapper = components => (name, props = {}, children = []) => {
   const nameLowerCase = name.toLocaleLowerCase();
   const component = components[nameLowerCase];
   if (component) return component({ ...props, children });
@@ -20,7 +20,7 @@ const hyperscriptWrapper = components => (name = 'div', props = {}, children = [
 };
 
 const taggedTemplate = (getHastFromString, wrapper) => (strings, ...valueArgs) => (
-  (props = {}) => {
+  props => {
     // Construct tagged template string with props
     const values = [...valueArgs];
     let string = '';
@@ -54,7 +54,10 @@ const taggedTemplate = (getHastFromString, wrapper) => (strings, ...valueArgs) =
       let schema = sanitizeSchema;
       if (Array.isArray(schema) || typeof sanitizeSchema !== 'object') schema = null;
       newHast = hastSanitize(newHast, schema);
-      if (newHast.type === 'root') newHast = div(newHast.children);
+      if (
+        newHast.type === 'root' ||
+        newHast.type === 'text'
+      ) newHast = div(newHast.children);
     }
 
     const components = (
@@ -82,18 +85,9 @@ const createMark = getHastFromString => (
   }
 );
 
-const reducePlugins = (processor, plugins) => {
-  if (plugins.length < 1) return processor;
-  return plugins.reduce(
-    (newProcessor, nextPlugin) => newProcessor.use(nextPlugin),
-    processor,
-  );
-};
-
 export const up = createMark(
   (string, plugins) => {
-    const processor = reducePlugins(rehype, plugins);
-    const hast = processor().parse(string);
+    const hast = rehype().use(plugins).parse(string);
 
     // Return the innerHTML of the body
     return hast.children[0].children[1];
@@ -102,8 +96,7 @@ export const up = createMark(
 
 export const down = createMark(
   (string, plugins) => {
-    const processor = reducePlugins(remark, plugins);
-    const mdast = processor().parse(string);
+    const mdast = remark().use(plugins).parse(string);
 
     // Convert from mdast to hast
     return mdastToHast(mdast);
