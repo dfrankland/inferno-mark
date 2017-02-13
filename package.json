@@ -24,7 +24,9 @@
   "homepage": "https://github.com/dfrankland/inferno-mark#readme",
   "scripts": {
     "prepublish": "npm run build",
-    "build": "babel-node ./node_modules/.bin/webpack"
+    "build": "babel-node ./node_modules/.bin/webpack",
+    "pretest": "babel-node ./node_modules/.bin/webpack --config ./webpack.config.test.js",
+    "test": "nyc tape ./dist/test.js | tap-spec"
   },
   "files": [
     "dist/index.js"
@@ -33,9 +35,17 @@
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
+    "babel-plugin-istanbul": "^4.0.0",
     "babel-plugin-transform-runtime": "^6.22.0",
     "babel-preset-env": "^1.1.8",
     "babel-preset-stage-0": "^6.22.0",
+    "inferno-create-element": "^1.3.0-rc.3",
+    "inferno-server": "^1.3.0-rc.3",
+    "inferno-test-utils": "^1.3.0-rc.3",
+    "nyc": "^10.1.2",
+    "source-map-support": "^0.4.11",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.3",
     "webpack": "^2.2.1"
   },
   "dependencies": {
@@ -61,5 +71,18 @@
     "plugins": [
       "transform-runtime"
     ]
+  },
+  "nyc": {
+    "include": [
+      "src/*.js"
+    ],
+    "sourceMap": false,
+    "instrument": false,
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "lines": 90,
+    "check-coverage": true
   }
 }
